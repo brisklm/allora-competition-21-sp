@@ -20,8 +20,7 @@ eth_source_path = os.path.join(data_base_path, os.getenv('ETH_SOURCE', 'raw_eth.
 features_sol_path = os.path.join(data_base_path, os.getenv('FEATURES_PATH', 'features_sol.csv'))
 features_eth_path = os.path.join(data_base_path, os.getenv('FEATURES_PATH_ETH', 'features_eth.csv'))
 TOKEN = os.getenv('TOKEN', 'BTC')
-TIMEFRAME = os.getenv('TIMEFRAME', '7d')
-PREDICTION_WINDOW = os.getenv('PREDICTION_WINDOW', '7d')
+TIMEFRAME = os.getenv('TIMEFRAME', '8h')
 TRAINING_DAYS = int(os.getenv('TRAINING_DAYS', 365))
 MINIMUM_DAYS = 180
 REGION = os.getenv('REGION', 'com')
@@ -31,24 +30,16 @@ CG_API_KEY = os.getenv('CG_API_KEY', 'CG-xA5NyokGEVbc4bwrvJPcpZvT')
 HELIUS_API_KEY = os.getenv('HELIUS_API_KEY', '70ed65ce-4750-4fd5-83bd-5aee9aa79ead')
 HELIUS_RPC_URL = os.getenv('HELIUS_RPC_URL', 'https://mainnet.helius-rpc.com')
 BITQUERY_API_KEY = os.getenv('BITQUERY_API_KEY', 'ory_at_LmFLzUutMY8EVb-P_PQVP9ntfwUVTV05LMal7xUqb2I.vxFLfMEoLGcu4XoVi47j-E2bspraTSrmYzCt1A4y2k')
-
-def get_selected_features():
-    token = os.getenv('TOKEN', 'BTC')
-    return [f'sign_log_return_lag1_{token}USDT', f'momentum_{token}USDT', f'rsi_{token}USDT', f'volatility_{token}USDT', 'volatility_BTCUSDT', 'volatility_ETHUSDT', f'close_{token}USDT_lag1', 'close_BTCUSDT_lag1', 'close_ETHUSDT_lag1', 'hour_of_day', 'day_of_week', f'momentum_1_{token}USDT', f'momentum_2_{token}USDT', f'momentum_5_{token}USDT', 'momentum_1_BTCUSDT', 'momentum_2_BTCUSDT', f'vol_adj_return_{token}USDT', f'direction_persistence_{token}USDT', f'momentum_accel_{token}USDT', f'rsi_divergence_{token}USDT', f'resistance_distance_{token}USDT', f'support_distance_{token}USDT', 'solana_tx_volume', 'solana_gas_fees', 'solana_validator_count', f'vol_regime_{token}USDT', f'trend_regime_{token}USDT', f'mean_reversion_regime_{token}USDT', f'range_regime_{token}USDT', f'gap_regime_{token}USDT', 'correlation_regime', f'near_support_{token}USDT', f'near_resistance_{token}USDT']
-SELECTED_FEATURES = get_selected_features()
-
-def get_required_features():
-    token = os.getenv('TOKEN', 'BTC')
-    return [f'sign_log_return_lag1_{token}USDT', f'momentum_{token}USDT', f'rsi_{token}USDT', f'volatility_{token}USDT', f'close_{token}USDT_lag1', 'hour_of_day']
-REQUIRED_FEATURES = get_required_features()
-MODEL_PARAMS = {'n_estimators': 800, 'learning_rate': 0.005, 'num_leaves': 15, 'max_depth': 4, 'min_child_samples': 150, 'subsample': 0.7, 'colsample_bytree': 0.7, 'reg_lambda': 8.0, 'reg_alpha': 3.0, 'min_gain_to_split': 0.05, 'feature_fraction': 0.8, 'bagging_freq': 5, 'n_jobs': 1, 'n_neighbors': 7, 'weights': 'distance', 'p': 1, 'hidden_size': 64, 'num_layers': 2, 'gamma': 0.05, 'min_child_weight': 8, 'iterations': 1200, 'depth': 5, 'l2_leaf_reg': 12.0, 'random_strength': 1.2, 'bagging_temperature': 0.7, 'border_count': 64}
+SELECTED_FEATURES = ['sign_log_return_lag1_BTCUSDT', 'momentum_BTCUSDT', 'rsi_BTCUSDT', 'volatility_BTCUSDT', 'volatility_ETHUSDT', 'close_BTCUSDT_lag1', 'close_ETHUSDT_lag1', 'hour_of_day', 'momentum_1_BTCUSDT', 'momentum_2_BTCUSDT', 'momentum_5_BTCUSDT', 'vol_adj_return_BTCUSDT', 'direction_persistence_BTCUSDT', 'momentum_accel_BTCUSDT', 'rsi_divergence_BTCUSDT', 'resistance_distance_BTCUSDT', 'support_distance_BTCUSDT', 'vol_regime_BTCUSDT', 'trend_regime_BTCUSDT', 'mean_reversion_regime_BTCUSDT', 'range_regime_BTCUSDT', 'gap_regime_BTCUSDT', 'correlation_regime', 'near_support_BTCUSDT', 'near_resistance_BTCUSDT', 'close_SOLUSDT_lag30', 'close_BTCUSDT_lag30', 'close_ETHUSDT_lag30']
+REQUIRED_FEATURES = ['sign_log_return_lag1_BTCUSDT', 'momentum_BTCUSDT', 'rsi_BTCUSDT', 'volatility_BTCUSDT', 'close_BTCUSDT_lag1', 'hour_of_day']
+MODEL_PARAMS = {'n_estimators': 900, 'learning_rate': 0.005, 'num_leaves': 15, 'max_depth': 4, 'min_child_samples': 150, 'subsample': 0.7, 'colsample_bytree': 0.7, 'reg_lambda': 8.0, 'reg_alpha': 3.0, 'min_gain_to_split': 0.05, 'feature_fraction': 0.8, 'bagging_freq': 5, 'n_jobs': 1, 'n_neighbors': 7, 'weights': 'distance', 'p': 1, 'hidden_size': 64, 'num_layers': 2, 'gamma': 0.05, 'min_child_weight': 8, 'iterations': 1200, 'depth': 5, 'l2_leaf_reg': 12.0, 'random_strength': 1.2, 'bagging_temperature': 0.7, 'border_count': 64}
 OPTUNA_TRIALS = int(os.getenv('OPTUNA_TRIALS', 50))
 USE_SYNTHETIC_DATA = os.getenv('USE_SYNTHETIC_DATA', 'True').lower() == 'true'
 PERFORMANCE_THRESHOLDS = {'RMSE': {'excellent': 0.01, 'good': 0.015, 'acceptable': 0.025, 'current': 0.015}, 'MZTAE': {'excellent': 0.3, 'good': 0.5, 'acceptable': 0.75, 'current': 0.5}, 'directional_accuracy': {'excellent': 0.7, 'good': 0.65, 'target': 0.6, 'acceptable': 0.55, 'minimum': 0.5}, 'correlation': {'excellent': 0.5, 'good': 0.3, 'acceptable': 0.2, 'minimum': 0.1}}
 
 def evaluate_performance(rmse, mztae, directional_acc=None, correlation=None):
     """
-    Evaluate model performance against Competition 20 thresholds.
+    Evaluate model performance against Competition 18 thresholds.
     Returns a performance rating and detailed assessment.
     """
     performance = {'overall': 'poor', 'details': {}}
@@ -127,7 +118,7 @@ def get_performance_summary(rmse, mztae, directional_acc=None, correlation=None)
     meets_threshold = meets_current_thresholds(rmse, mztae, directional_acc)
     evaluation = evaluate_performance(rmse, mztae, directional_acc, correlation)
     summary = []
-    summary.append(f'Performance Summary for Competition 20:')
+    summary.append(f'Performance Summary for Competition 18:')
     summary.append(f"{'=' * 50}")
     summary.append(f"RMSE: {rmse:.6f} (Threshold: {PERFORMANCE_THRESHOLDS['RMSE']['current']}) - {evaluation['details']['rmse'].upper()}")
     summary.append(f"MZTAE: {mztae:.6f} (Threshold: {PERFORMANCE_THRESHOLDS['MZTAE']['current']}) - {evaluation['details']['mztae'].upper()}")
