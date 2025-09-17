@@ -31,8 +31,16 @@ CG_API_KEY = os.getenv('CG_API_KEY', 'CG-xA5NyokGEVbc4bwrvJPcpZvT')
 HELIUS_API_KEY = os.getenv('HELIUS_API_KEY', '70ed65ce-4750-4fd5-83bd-5aee9aa79ead')
 HELIUS_RPC_URL = os.getenv('HELIUS_RPC_URL', 'https://mainnet.helius-rpc.com')
 BITQUERY_API_KEY = os.getenv('BITQUERY_API_KEY', 'ory_at_LmFLzUutMY8EVb-P_PQVP9ntfwUVTV05LMal7xUqb2I.vxFLfMEoLGcu4XoVi47j-E2bspraTSrmYzCt1A4y2k')
-SELECTED_FEATURES = ['sign_log_return_lag1_SOLUSDT', 'momentum_SOLUSDT', 'rsi_SOLUSDT', 'volatility_SOLUSDT', 'volatility_BTCUSDT', 'volatility_ETHUSDT', 'close_SOLUSDT_lag1', 'close_BTCUSDT_lag1', 'close_ETHUSDT_lag1', 'hour_of_day', 'day_of_week', 'momentum_1_SOLUSDT', 'momentum_2_SOLUSDT', 'momentum_5_SOLUSDT', 'momentum_1_BTCUSDT', 'momentum_2_BTCUSDT', 'vol_adj_return_SOLUSDT', 'direction_persistence_SOLUSDT', 'momentum_accel_SOLUSDT', 'rsi_divergence_SOLUSDT', 'resistance_distance_SOLUSDT', 'support_distance_SOLUSDT', 'solana_tx_volume', 'solana_gas_fees', 'solana_validator_count', 'vol_regime_SOLUSDT', 'trend_regime_SOLUSDT', 'mean_reversion_regime_SOLUSDT', 'range_regime_SOLUSDT', 'gap_regime_SOLUSDT', 'correlation_regime', 'near_support_SOLUSDT', 'near_resistance_SOLUSDT', 'close_SOLUSDT_lag30', 'close_BTCUSDT_lag30', 'close_ETHUSDT_lag30']
-REQUIRED_FEATURES = ['sign_log_return_lag1_SOLUSDT', 'momentum_SOLUSDT', 'rsi_SOLUSDT', 'volatility_SOLUSDT', 'close_SOLUSDT_lag1', 'hour_of_day']
+
+def get_selected_features():
+    token = os.getenv('TOKEN', 'BTC')
+    return [f'sign_log_return_lag1_{token}USDT', f'momentum_{token}USDT', f'rsi_{token}USDT', f'volatility_{token}USDT', 'volatility_BTCUSDT', 'volatility_ETHUSDT', f'close_{token}USDT_lag1', 'close_BTCUSDT_lag1', 'close_ETHUSDT_lag1', 'hour_of_day', 'day_of_week', f'momentum_1_{token}USDT', f'momentum_2_{token}USDT', f'momentum_5_{token}USDT', 'momentum_1_BTCUSDT', 'momentum_2_BTCUSDT', f'vol_adj_return_{token}USDT', f'direction_persistence_{token}USDT', f'momentum_accel_{token}USDT', f'rsi_divergence_{token}USDT', f'resistance_distance_{token}USDT', f'support_distance_{token}USDT', 'solana_tx_volume', 'solana_gas_fees', 'solana_validator_count', f'vol_regime_{token}USDT', f'trend_regime_{token}USDT', f'mean_reversion_regime_{token}USDT', f'range_regime_{token}USDT', f'gap_regime_{token}USDT', 'correlation_regime', f'near_support_{token}USDT', f'near_resistance_{token}USDT']
+SELECTED_FEATURES = get_selected_features()
+
+def get_required_features():
+    token = os.getenv('TOKEN', 'BTC')
+    return [f'sign_log_return_lag1_{token}USDT', f'momentum_{token}USDT', f'rsi_{token}USDT', f'volatility_{token}USDT', f'close_{token}USDT_lag1', 'hour_of_day']
+REQUIRED_FEATURES = get_required_features()
 MODEL_PARAMS = {'n_estimators': 800, 'learning_rate': 0.005, 'num_leaves': 15, 'max_depth': 4, 'min_child_samples': 150, 'subsample': 0.7, 'colsample_bytree': 0.7, 'reg_lambda': 8.0, 'reg_alpha': 3.0, 'min_gain_to_split': 0.05, 'feature_fraction': 0.8, 'bagging_freq': 5, 'n_jobs': 1, 'n_neighbors': 7, 'weights': 'distance', 'p': 1, 'hidden_size': 64, 'num_layers': 2, 'gamma': 0.05, 'min_child_weight': 8, 'iterations': 1200, 'depth': 5, 'l2_leaf_reg': 12.0, 'random_strength': 1.2, 'bagging_temperature': 0.7, 'border_count': 64}
 OPTUNA_TRIALS = int(os.getenv('OPTUNA_TRIALS', 50))
 USE_SYNTHETIC_DATA = os.getenv('USE_SYNTHETIC_DATA', 'True').lower() == 'true'
