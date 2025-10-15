@@ -39,7 +39,7 @@ PERFORMANCE_THRESHOLDS = {'RMSE': {'excellent': 0.01, 'good': 0.015, 'acceptable
 
 def evaluate_performance(rmse, mztae, directional_acc=None, correlation=None):
     """
-    Evaluate model performance against Competition 18 thresholds.
+    Evaluate model performance against Competition 21 thresholds.
     Returns a performance rating and detailed assessment.
     """
     performance = {'overall': 'poor', 'details': {}}
@@ -118,7 +118,7 @@ def get_performance_summary(rmse, mztae, directional_acc=None, correlation=None)
     meets_threshold = meets_current_thresholds(rmse, mztae, directional_acc)
     evaluation = evaluate_performance(rmse, mztae, directional_acc, correlation)
     summary = []
-    summary.append(f'Performance Summary for Competition 18:')
+    summary.append(f'Performance Summary for Competition 21:')
     summary.append(f"{'=' * 50}")
     summary.append(f"RMSE: {rmse:.6f} (Threshold: {PERFORMANCE_THRESHOLDS['RMSE']['current']}) - {evaluation['details']['rmse'].upper()}")
     summary.append(f"MZTAE: {mztae:.6f} (Threshold: {PERFORMANCE_THRESHOLDS['MZTAE']['current']}) - {evaluation['details']['mztae'].upper()}")
